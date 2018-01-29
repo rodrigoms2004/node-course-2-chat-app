@@ -19,9 +19,10 @@ io.on('connection', (socket) => {   // socket is dame guy from index.html
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-  socket.on('createMessage', (message) => {
+  socket.on('createMessage', (message, callback) => {
     console.log('createMessage', message);
     io.emit('newMessage', generateMessage(message.from, message.text));
+    callback('This is from the server.');
     // socket.broadcast.emit('newMessage', {
     //     from: message.from,
     //     text: message.text,
@@ -41,14 +42,3 @@ server.listen(port, () => {
 
 
 // http://localhost:3000/socket.io/socket.io.js
-/*
-
-Emit event            LIsten for event (Got new message: data)
-newMessage, from server to client
-      from ,text, createAt
-
-
-
-createMessage, from client to server
-      from, text
-*/
